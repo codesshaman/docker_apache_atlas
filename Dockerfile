@@ -1,5 +1,6 @@
 # FROM maven:3.8.6-openjdk-8 AS builder
-FROM centos:centos8.4.2105
+# FROM centos:centos8.4.2105
+FROM maven:3.9.4-eclipse-temurin-8-alpine
 
 ENV ATLAS_VERSION 2.3.0
 ENV TARBALL apache-atlas-${ATLAS_VERSION}-sources.tar.gz
@@ -11,23 +12,30 @@ ENV	MAVEN_OPTS	"-Xms2g -Xmx2g"
 # COPY atlas.tar.xz /tmp
 
 # RUN cd tmp && mkdir atlas_src && tar -xvf atlas.tar.xz -C atlas_src && cd atlas_src
-RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
-	sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+# RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
+# 	sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 
 
-RUN yum update -y && yum -y install \
-	java-11-openjdk-devel \
+# RUN yum update -y && yum -y install \
+# 	java-11-openjdk-devel \
+# 	python3 \
+# 	maven  \
+# 	unzip \
+# 	patch \
+# 	wget
+
+RUN apk update && apk add -y --no-cache \
 	python3 \
-	maven  \
 	unzip \
 	patch \
 	wget
+
 RUN cd /tmp && wget --no-check-certificate ${ATLAS_REPO} && \
 	mkdir /tmp/atlas_src && tar -xzf ${TARBALL} -C /tmp/atlas_src --strip 1
 
 # COPY pom.xml /tmp/atlas_src/pom.xml
 
-# mvn -DskipTests -Dmaven.wagon.http.ssl.ignore.validity.dates=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.insecure=true clean install -rf :atlas-webapp
+# mvn -DskipTests -Dmaven.wagon.http.ssl.ignore.validity.dates=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.insecure=true clean install -U -rf :atlas-webapp
 
 	# sed -i 's!<version>2.6</version>!<version>3.3.2</version>!1' /tmp/atlas_src/pom.xml
 	# cd /tmp/atlas_src && mvn clean -DskipTests package -Pdist | grep -n "" | awk 'NR % 3 == 0'
