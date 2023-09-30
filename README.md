@@ -22,4 +22,12 @@
 
 6. Выполнить внутри /tmp/atlas_src команду для сборки. Например:
 
-``mvn -DskipTests -Dmaven.wagon.http.ssl.ignore.validity.dates=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.insecure=true clean install -U -Drat.numUnapprovedLicenses=200``
+```
+mvn -U \
+-DskipTests \
+-Drat.skip=true \
+-Drat.numUnapprovedLicenses=200 \
+-Dmaven.wagon.http.ssl.insecure=true \
+-Dmaven.wagon.http.ssl.ignore.validity.dates=true \
+clean install
+```
