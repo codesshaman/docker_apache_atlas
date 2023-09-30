@@ -846,13 +846,33 @@
             <name>Restlet repository</name>
             <url>https://maven.restlet.talend.com</url>
         </repository>
-        <repository>
+        <!-- <repository>
+            <id>jira-restlet</id>
+            <name>jira repository</name>
+            <url>https://issues.apache.org/jira/browse/ATLAS-4760</url>
+        </repository> -->
+        <!-- <repository>
+            <id>google</id>
+            <name>Google Maven Repository</name>
+            <url>https://maven.google.com</url>
+        </repository> -->
+        <!-- <repository>
+            <id>amazon</id>
+            <name>Amazon Maven Repository</name>
+            <url>https://mvnrepository.com/repos/amazon</url>
+        </repository> -->
+        <!-- <repository>
+            <id>jcenter</id>
+            <name>JCenter</name>
+            <url>https://jcenter.bintray.com</url>
+        </repository> -->
+        <!-- <repository>
             <id>central</id>
             <url>https://repo1.maven.org/maven2</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-        </repository>
+        </repository> -->
         <repository>
             <id>hortonworks.repo</id>
             <url>https://repo.hortonworks.com/content/repositories/releases</url>
@@ -891,6 +911,16 @@
             <id>typesafe</id>
             <name>Typesafe Repository</name>
             <url>https://repo.typesafe.com/typesafe/releases/</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.bundles.release</id>
+            <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
+            <url>http://repository.springsource.com/maven/bundles/release</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.bundles.external</id>
+            <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
+            <url>http://repository.springsource.com/maven/bundles/external</url>
         </repository>
     </repositories>
 
@@ -1793,7 +1823,7 @@
                     <version>1.4</version>
                 </plugin>
 
-                <!-- <plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.7.0</version>
@@ -1801,7 +1831,7 @@
                         <source>1.8</source>
                         <target>1.8</target>
                     </configuration>
-                </plugin> -->
+                </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -1819,6 +1849,45 @@
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>1.4</version>
+                    <configuration>
+                        <node.version>v18.17.1</node.version>
+                        <npm.version>9.6.6</npm.version>
+                        <workingDirectory>./angular</workingDirectory>
+                    </configuration>
+                    <executions>
+                    
+                        <execution>
+                            <id>install node and npm</id>
+                            <goals>
+                                <goal>install-node-and-npm</goal>
+                            </goals>
+                            <phase>generate-resources</phase>
+                        </execution>
+                
+                
+                        <execution>
+                                <id>npm install</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <arguments>install</arguments>
+                                </configuration>
+                        </execution> 
+                
+            
+                        <execution>
+                            <id>npm run-script build</id>
+                            <goals>
+                                <goal>npm</goal>
+                            </goals>
+                            <phase>generate-resources</phase>
+                            <configuration>
+                                <arguments>run-script build</arguments>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <plugin>
@@ -1917,13 +1986,13 @@
                         </execution>
                     </executions>
                 </plugin>
-                <plugin>
+                <!-- <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
                     <configuration>
                     <release>1.8.0.312</release>
                     </configuration>
-                </plugin>
+                </plugin> -->
             </plugins>
         </pluginManagement>
 
@@ -2176,11 +2245,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <dependencies>
-                    <dependency>
+                    <!-- <dependency>
                         <groupId>org.apache.atlas</groupId>
                         <artifactId>atlas-buildtools</artifactId>
                         <version>${project.version}</version>
-                    </dependency>
+                    </dependency> -->
                 </dependencies>
                 <executions>
                     <execution>
