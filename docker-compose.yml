@@ -5,8 +5,9 @@ services:
     build: .
     volumes:
       - atlas_centos:/tmp/atlas_src
-    ports:
-      - "21000:21000"
+      - atlas_repos:/root/.m2/repository
+    # ports:
+    #   - "21000:21000"
     container_name: apache_atlas
     restart: unless-stopped
     hostname: atlas
@@ -33,4 +34,9 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /home/$USER/docker-apache-atlas/atlas
+      device: /home/$USER/docker_apache_atlas/atlas
+  atlas_repos:
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/$USER/docker_apache_atlas/repos
