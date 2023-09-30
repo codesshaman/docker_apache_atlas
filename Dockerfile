@@ -26,16 +26,24 @@ ENV	MAVEN_OPTS	"-Xms2g -Xmx2g"
 
 RUN apk update && apk add -y --no-cache \
 	python3 \
+	nodejs \
 	unzip \
 	patch \
-	wget
+	wget \
+	npm
 
 RUN cd /tmp && wget --no-check-certificate ${ATLAS_REPO} && \
 	mkdir /tmp/atlas_src && tar -xzf ${TARBALL} -C /tmp/atlas_src --strip 1
 
 # COPY pom.xml /tmp/atlas_src/pom.xml
 
-# mvn -DskipTests -Dmaven.wagon.http.ssl.ignore.validity.dates=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.insecure=true clean install -U -rf :atlas-webapp
+# RUN	mvn -U \
+# 		-DskipTests \
+# 		-Drat.skip=true \
+# 		-Drat.numUnapprovedLicenses=200 \
+# 		-Dmaven.wagon.http.ssl.insecure=true \
+# 		-Dmaven.wagon.http.ssl.ignore.validity.dates=true \
+# 		clean install 
 
 	# sed -i 's!<version>2.6</version>!<version>3.3.2</version>!1' /tmp/atlas_src/pom.xml
 	# cd /tmp/atlas_src && mvn clean -DskipTests package -Pdist | grep -n "" | awk 'NR % 3 == 0'
