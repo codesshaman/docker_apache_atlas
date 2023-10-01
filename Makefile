@@ -1,4 +1,4 @@
-name = OpenLDAP
+name = Apache Atlas
 
 VAR :=				# Cmd arg var
 NO_COLOR=\033[0m	# Color Reset
@@ -15,6 +15,7 @@ help:
 	@echo -e "$(WARN)- make				: Launch configuration"
 	@echo -e "$(WARN)- make build			: Configuration build"
 	@echo -e "$(WARN)- make connect			: Exec to container"
+	@echo -e "$(WARN)- make dirs			: Create volumes directories"
 	@echo -e "$(WARN)- make down			: Stopping the configuration"
 	@echo -e "$(WARN)- make env			: Create .env from source"
 	@echo -e "$(WARN)- make ps			: Show the configuration "
@@ -31,13 +32,19 @@ build:
 connect:
 	@docker exec -it atlas bash
 
+dirs:
+	@if [ ! -d conf ]; then mkdir conf; fi
+	@if [ ! -d data ]; then mkdir data; fi
+	@if [ ! -d logs ]; then mkdir logs; fi
+	@printf "Directories was created!\n"
+
 down:
 	@printf "Stopping the configuration ${name}...\n"
 	@docker-compose -f ./docker-compose.yml down
 
 env:
-	@printf "Create .env from source...\n"
-	@bash [ -f .env ] || cp .env.example .env
+	@if [ ! -f .env ]; then cp .env.example .env; fi
+	@printf ".env from source was created!\n"
 
 ps:
 	@printf "Show the configuration ${name}......\n"
