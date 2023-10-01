@@ -1,4 +1,4 @@
-name = Apache Atlas
+name = OpenLDAP
 
 VAR :=				# Cmd arg var
 NO_COLOR=\033[0m	# Color Reset
@@ -14,7 +14,6 @@ help:
 	@echo -e "$(OK)==== Все команды для конфигурации ${name} ===="
 	@echo -e "$(WARN)- make				: Launch configuration"
 	@echo -e "$(WARN)- make build			: Configuration build"
-	@echo -e "$(WARN)- make connect			: Exec to container with root"
 	@echo -e "$(WARN)- make down			: Stopping the configuration"
 	@echo -e "$(WARN)- make env			: Create .env from source"
 	@echo -e "$(WARN)- make ps			: Show the configuration "
@@ -25,10 +24,8 @@ help:
 
 build:
 	@printf "Сonfiguration ${name} build...\n"
+	@bash [ -f .env ] || cp .env.example .env
 	@docker-compose -f ./docker-compose.yml up -d --build
-
-connect:
-	@docker exec -it apache_atlas bash
 
 down:
 	@printf "Stopping the configuration ${name}...\n"
@@ -61,4 +58,4 @@ fclean:
 #	@docker network prune --force
 #	@docker volume prune --force
 
-.PHONY	: all build down env ps push re clean fclean
+.PHONY	: all build down ps re scan show clean fclean

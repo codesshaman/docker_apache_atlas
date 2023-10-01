@@ -1,42 +1,22 @@
-version: '3'
+version: "3"
 
 services:
   atlas:
-    build: .
-    volumes:
-      - atlas_centos:/tmp/atlas_src
-      - atlas_repos:/root/.m2/repository
-    # ports:
-    #   - "21000:21000"
+    image: sburn/apache-atlas:2.3.0
+    ports:
+      - 21000:21000
     container_name: apache_atlas
     restart: unless-stopped
     hostname: atlas
-    environment:
-     - LOG_LEVEL=INFO
     healthcheck:
-      test: ["CMD", "curl", "-s", "--fail", "http://127.0.0.1:21000"]
-      start_period: 5s
-      interval: 15s
-      timeout: 1s
-    cpus: 2
-    mem_limit: 4G
-    mem_reservation: 4G
+      test: curl --fail http://localhost:21000/ || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
     # networks:
     #   - default
 
 # networks:
 #   default:
 #     external: true
-#     name: $NETWORK_NAME
-
-volumes:
-  atlas_centos:
-    driver_opts:
-      o: bind
-      type: none
-      device: /home/$USER/docker_apache_atlas/atlas
-  atlas_repos:
-    driver_opts:
-      o: bind
-      type: none
-      device: /home/$USER/docker_apache_atlas/repos
+#     name: skynet
