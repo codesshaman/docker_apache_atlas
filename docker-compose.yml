@@ -34,9 +34,9 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /home/$USER/docker_apache_atlas/atlas
+      device: /home/nick/Docker/docker_apache_atlas/atlas
   atlas_repos:
     driver_opts:
       o: bind
       type: none
-      device: /home/$USER/docker_apache_atlas/repos
+      device: /home/nick/Docker/docker_apache_atlas/repos

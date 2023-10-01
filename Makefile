@@ -26,6 +26,7 @@ help:
 build:
 	@printf "Сonfiguration ${name} build...\n"
 	@docker-compose -f ./docker-compose.yml up -d --build
+	@bash copy.sh
 
 connect:
 	@docker exec -it apache_atlas bash
@@ -37,6 +38,9 @@ down:
 env:
 	@printf "Create .env from source...\n"
 	@bash [ -f .env ] || cp .env.example .env
+
+maven:
+	@bash build.sh
 
 ps:
 	@printf "Show the configuration ${name}......\n"
@@ -53,6 +57,7 @@ re:
 clean: down
 	@printf "Clean all images...\n"
 	@docker system prune -a
+	@bash clean.sh
 
 fclean:
 	@printf "Full clean of all configurations\n"

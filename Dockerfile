@@ -1,6 +1,7 @@
 # FROM maven:3.8.6-openjdk-8 AS builder
 # FROM centos:centos8.4.2105
-FROM maven:3.9.4-eclipse-temurin-8-alpine
+# FROM maven:3.9.4-eclipse-temurin-8-alpine
+FROM maven:3.9.4-eclipse-temurin-11-alpine
 
 ENV ATLAS_VERSION 2.3.0
 ENV TARBALL apache-atlas-${ATLAS_VERSION}-sources.tar.gz
